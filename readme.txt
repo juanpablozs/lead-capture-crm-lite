@@ -1,42 +1,42 @@
 === Lead Capture CRM Lite ===
-Contributors: yourname
-Tags: lead capture, CRM, contact form, WordPress plugin
-Requires at least: 5.0
-Tested up to: 6.0
+Contribuidor: tu_nombre
+Etiquetas: captura de leads, CRM, formulario de contacto, plugin de WordPress
+Requiere al menos: 6.0
+Probado hasta: 6.4
 Stable tag: 1.0.0
-License: MIT
+Licencia: MIT
 License URI: https://opensource.org/licenses/MIT
 
-== Description ==
-Lead Capture CRM Lite is a powerful WordPress plugin designed to help you capture leads and manage them effectively. With an easy-to-use interface, you can set up lead capture forms, manage leads, and configure settings for notifications and webhooks.
+== Descripción ==
+Lead Capture CRM Lite es un plugin ligero para WordPress diseñado para capturar y gestionar leads de forma sencilla. Incluye un tipo de contenido personalizado para leads, un formulario (shortcode y bloque), exportación a CSV, integración por webhook y un endpoint REST.
 
-== Features ==
-* Easy lead capture forms
-* Admin interface for managing leads
-* Customizable settings for notifications and webhooks
-* CSV export functionality
-* REST API endpoint for integration with other services
+== Características ==
+* Formularios de captura de leads (shortcode y bloque de Gutenberg)
+* Interfaz de administración para ver y exportar leads
+* Ajustes para notificaciones por correo y webhook
+* Exportación de leads a CSV
+* Endpoint REST para integración (acceso restringido a administradores)
 
-== Installation ==
-1. Upload the `lead-capture-crm-lite` folder to the `/wp-content/plugins/` directory.
-2. Activate the plugin through the 'Plugins' menu in WordPress.
-3. Configure the settings under the 'Lead Capture CRM Lite' menu in the admin dashboard.
+== Instalación ==
+1. Copia la carpeta `lead-capture-crm-lite` en el directorio `/wp-content/plugins/` de tu instalación de WordPress.
+2. Activa el plugin desde el menú 'Plugins' en el panel de administración.
+3. Configura los ajustes en 'Settings > Lead Capture CRM Lite'.
 
-== Frequently Asked Questions ==
+== Preguntas frecuentes ==
 
-= How do I capture leads? =
-You can use the provided shortcode or Gutenberg block to add lead capture forms to your posts or pages.
+= ¿Cómo capturo leads? =
+Usa el shortcode `[lcc_lead_form]` o inserta el bloque 'Lead Capture Form' en una página o entrada.
 
-= Can I customize the lead capture form? =
-Yes, you can customize the form fields and styles through the plugin settings.
+= ¿Puedo personalizar el formulario? =
+Sí. El bloque permite mostrar/ocultar el campo 'company', definir estado por defecto y una URL de redirección. También puedes estilizarlo con CSS.
 
-== Changelog ==
+== Historial de cambios ==
 = 1.0.0 =
-* Initial release of Lead Capture CRM Lite.
+* Versión inicial.
 
-== Upgrade Notice ==
+== Notas de actualización ==
 = 1.0.0 =
-Initial release. Please update to this version for the latest features and improvements.
+Lanzamiento inicial.
 
-== License ==
-This plugin is licensed under the MIT License. See the LICENSE file for more details.
+== Licencia ==
+Este plugin está licenciado bajo la licencia MIT. Consulta el archivo LICENSE para más detalles.

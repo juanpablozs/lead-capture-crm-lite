@@ -1,71 +1,98 @@
 # Lead Capture CRM Lite
 
-Lead Capture CRM Lite is a WordPress plugin designed to help you capture leads effectively and manage them through a user-friendly interface. This plugin provides essential features for lead management, including a customizable lead capture form, settings for email notifications, and a straightforward admin dashboard.
+Proyecto personal: implementación ligera de captura de leads para WordPress. No es un proyecto colaborativo; las instrucciones aquí son para uso personal y para facilitar el despliegue y las pruebas en el entorno local.
 
-## Features
+Resumen
+- CPT "lcc_lead" (Leads) privado.
+- Formulario en frontend disponible por shortcode y bloque de Gutenberg.
+- Página de ajustes (Settings > Lead Capture CRM Lite): notificaciones, webhook, rate limit.
+- Exportar leads a CSV desde la administración.
+- REST API: GET /wp-json/lcc/v1/leads (requiere manage_options).
+- Desarrollo con Composer, PHPUnit, PHPCS, PHPStan y @wordpress/scripts para el bloque.
 
-- **Lead Capture Form**: Easily embed a lead capture form on your website using a shortcode or Gutenberg block.
-- **Admin Dashboard**: Manage leads from a dedicated admin page, view lead details, and export leads as CSV.
-- **Settings Configuration**: Configure admin email notifications, webhook URLs, and rate limits from the settings page.
-- **REST API Support**: Access lead data programmatically through a REST API endpoint.
-- **Translation Ready**: The plugin is translation-ready with a .pot file included for easy localization.
+Requisitos
+- PHP 8.0+
+- WordPress 6.4+
+- Composer
+- Node.js (recomendado 18+)
+- Docker & Docker Compose (opcional, recomendado para entorno local)
 
-## Installation
+Instalación rápida (PowerShell)
+1. Coloca el plugin en la ruta del proyecto:
+   c:\Users\carde\Desktop\crm\lead-capture-crm-lite
 
-1. **Download the Plugin**: Download the plugin zip file from the WordPress repository or GitHub.
-2. **Upload the Plugin**: Go to your WordPress admin panel, navigate to Plugins > Add New > Upload Plugin, and upload the zip file.
-3. **Activate the Plugin**: After uploading, activate the plugin from the Plugins menu.
-4. **Configure Settings**: Navigate to the plugin settings page to configure your preferences.
-
-## Usage
-
-- **Embedding the Lead Capture Form**: Use the shortcode `[lead_capture_form]` to display the lead capture form on any post or page.
-- **Accessing the Admin Dashboard**: Go to the Leads section in the WordPress admin menu to manage your captured leads.
-
-## Development
-
-To contribute to the development of Lead Capture CRM Lite, follow these steps:
-
-1. Clone the repository:
-   ```
-   git clone https://github.com/yourusername/lead-capture-crm-lite.git
-   ```
-2. Navigate to the project directory:
-   ```
-   cd lead-capture-crm-lite
-   ```
-3. Install PHP dependencies:
-   ```
+2. Instalar dependencias PHP:
+   ```powershell
+   cd 'c:\Users\carde\Desktop\crm\lead-capture-crm-lite'
    composer install
    ```
-4. Install JavaScript dependencies:
-   ```
-   npm install
-   ```
-5. Start the local development environment:
-   ```
-   docker-compose up
+
+3. Instalar dependencias JS y compilar bloque:
+   ```powershell
+   npm ci
+   npm run build
    ```
 
-## Testing
+4. Levantar entorno WordPress (opcional, usa docker-compose.yml incluido):
+   ```powershell
+   docker compose up -d
+   # Sitio WP en http://localhost:8000
+   ```
 
-To run the tests, use the following command:
-```
-vendor/bin/phpunit
-```
+5. Activar el plugin:
+   - Desde el administrador de WordPress: Plugins > Lead Capture CRM Lite > Activar
+   - O con WP-CLI dentro del contenedor:
+     ```powershell
+     docker compose exec wordpress wp plugin activate lead-capture-crm-lite --allow-root
+     ```
 
-## Contributing
+Uso
+- Shortcode: añadir `[lcc_lead_form]` en cualquier página/post.
+- Bloque: "Lead Capture Form" en el editor de bloques (Inspector: mostrar/ocultar campo company, estado por defecto, URL de redirección).
+- Ajustes: Settings > Lead Capture CRM Lite — configurar email, webhook y rate limit.
+- Exportar: Settings > Export Leads (botón "Export as CSV").
 
-We welcome contributions! Please fork the repository and submit a pull request for any enhancements or bug fixes.
+REST API
+- Endpoint: GET /wp-json/lcc/v1/leads
+- Requiere usuario con capability `manage_options`.
+- Soporta parámetros: status, after, before, per_page, page.
 
-## License
+Pruebas y análisis estático
+- PHPUnit (requiere WordPress test suite configurado y variable WP_TESTS_DIR apuntando a wordpress-tests-lib):
+  ```powershell
+  vendor\bin\phpunit -c tests\phpunit.xml
+  ```
+- PHPCS (WPCS):
+  ```powershell
+  vendor\bin\phpcs -p
+  ```
+- PHPStan:
+  ```powershell
+  vendor\bin\phpstan analyse -c phpstan.neon
+  ```
+- Build JS:
+  ```powershell
+  npm run build
+  ```
 
-This plugin is licensed under the MIT License. See the LICENSE file for more details.
+Notas de seguridad y operación
+- Todas las entradas se sanitizan y escapan donde corresponde.
+- Formularios usan nonce y honeypot; hay limitación por IP mediante transients.
+- Webhook se realiza con wp_remote_post y no bloquea la experiencia del usuario; fallos se registran cuando WP_DEBUG está activo.
 
-## Changelog
+Archivos importantes
+- Plugin bootstrap: `lead-capture-crm-lite.php`
+- Código fuente PHP: `src/`
+- Bloque (fuente): `assets/block/src`
+- Bloque compilado: `assets/block/build`
+- Tests: `tests/`
+- `docker-compose.yml` (entorno de desarrollo)
 
-See the CHANGELOG.md file for a list of changes and updates to the plugin.
+Licencia
+- MIT — uso personal y privado.
 
-## Support
+Capturas
+- Añadir capturas en `assets/screenshots/` si se desea guardar imágenes de la interfaz.
 
-For support, please open an issue on the GitHub repository or contact us through the WordPress support forums.
+Fin.
+
