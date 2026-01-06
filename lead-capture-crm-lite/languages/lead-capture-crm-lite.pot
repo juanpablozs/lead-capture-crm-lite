@@ -1,0 +1,68 @@
+msgid "Lead Capture CRM Lite"
+msgstr ""
+
+msgid "A simple and effective lead capture plugin for WordPress."
+msgstr ""
+
+msgid "Settings"
+msgstr ""
+
+msgid "Admin Email"
+msgstr ""
+
+msgid "Webhook URL"
+msgstr ""
+
+msgid "Rate Limit"
+msgstr ""
+
+msgid "Leads"
+msgstr ""
+
+msgid "No leads found."
+msgstr ""
+
+msgid "Export Leads"
+msgstr ""
+
+msgid "Lead Name"
+msgstr ""
+
+msgid "Lead Email"
+msgstr ""
+
+msgid "Lead Phone"
+msgstr ""
+
+msgid "Lead Message"
+msgstr ""
+
+msgid "Submit"
+msgstr ""
+
+msgid "Thank you for your submission!"
+msgstr ""
+
+msgid "Error: Please fill in all required fields."
+msgstr ""
+
+msgid "Lead Capture Form"
+msgstr ""
+
+msgid "Manage Leads"
+msgstr ""
+
+msgid "Lead Details"
+msgstr ""
+
+msgid "Delete Lead"
+msgstr ""
+
+msgid "Are you sure you want to delete this lead?"
+msgstr ""
+
+msgid "Lead captured successfully."
+msgstr ""
+
+msgid "Lead capture failed."
+msgstr ""

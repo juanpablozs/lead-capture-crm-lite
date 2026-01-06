@@ -1,0 +1,17 @@
+<tests/phpunit.xml>
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit bootstrap="bootstrap.php">
+    <testsuites>
+        <testsuite name="Lead Capture CRM Lite Test Suite">
+            <directory>./</directory>
+        </testsuite>
+    </testsuites>
+    <php>
+        <ini name="error_reporting" value="-1"/>
+        <ini name="display_errors" value="1"/>
+        <server name="WP_TESTS_DIR" value="/tmp/wordpress-tests-lib"/>
+        <server name="WP_PLUGIN_DIR" value="/tmp/wordpress/wp-content/plugins"/>
+        <server name="WP_CONTENT_DIR" value="/tmp/wordpress/wp-content"/>
+        <server name="WP_DEBUG" value="1"/>
+    </php>
+</phpunit>

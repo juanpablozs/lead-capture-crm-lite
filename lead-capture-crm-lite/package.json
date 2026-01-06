@@ -1,0 +1,25 @@
+{
+  "name": "lead-capture-crm-lite",
+  "version": "1.0.0",
+  "description": "A lightweight lead capture CRM plugin for WordPress.",
+  "main": "lead-capture-crm-lite.php",
+  "scripts": {
+    "build": "npm run build",
+    "test": "phpunit"
+  },
+  "keywords": [
+    "wordpress",
+    "plugin",
+    "crm",
+    "lead capture"
+  ],
+  "author": "Your Name",
+  "license": "MIT",
+  "dependencies": {
+    "jquery": "^3.6.0"
+  },
+  "devDependencies": {
+    "phpcs": "^3.6.0",
+    "phpunit": "^9.5.0"
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "name": "lead-capture-crm-lite",
+  "description": "A lightweight WordPress plugin for capturing leads and managing CRM functionalities.",
+  "type": "wordpress-plugin",
+  "require": {
+    "php": ">=7.4",
+    "composer/installers": "^1.9",
+    "wpackagist-plugin/advanced-custom-fields": "^5.9"
+  },
+  "autoload": {
+    "psr-4": {
+      "LeadCaptureCRM\\": "includes/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "LeadCaptureCRM\\Tests\\": "tests/"
+    }
+  },
+  "minimum-stability": "stable",
+  "prefer-stable": true,
+  "scripts": {
+    "test": "phpunit",
+    "lint": "phpcs",
+    "analyze": "phpstan analyse"
+  }
+}
