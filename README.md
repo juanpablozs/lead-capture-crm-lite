@@ -1,98 +1,94 @@
 # Lead Capture CRM Lite
 
-Proyecto personal: implementación ligera de captura de leads para WordPress. No es un proyecto colaborativo; las instrucciones aquí son para uso personal y para facilitar el despliegue y las pruebas en el entorno local.
+Plugin ligero para WordPress que permite capturar y gestionar leads. Incluye un tipo de contenido personalizado (`lcc_lead`), un formulario (shortcode y bloque de Gutenberg), exportación CSV, webhook y un endpoint REST.
 
-Resumen
-- CPT "lcc_lead" (Leads) privado.
-- Formulario en frontend disponible por shortcode y bloque de Gutenberg.
-- Página de ajustes (Settings > Lead Capture CRM Lite): notificaciones, webhook, rate limit.
-- Exportar leads a CSV desde la administración.
-- REST API: GET /wp-json/lcc/v1/leads (requiere manage_options).
-- Desarrollo con Composer, PHPUnit, PHPCS, PHPStan y @wordpress/scripts para el bloque.
+Resumen de características
+- Tipo de contenido `lcc_lead` (no público, administración interna).
+- Formulario frontend disponible como shortcode y bloque de Gutenberg.
+- Página de ajustes (notificaciones, webhook, límite de peticiones por IP).
+- Exportación de leads a CSV desde el área de administración.
+- Endpoint REST: `GET /wp-json/lcc/v1/leads` (acceso restringido a administradores).
 
-Requisitos
+Requisitos mínimos
 - PHP 8.0+
 - WordPress 6.4+
-- Composer
-- Node.js (recomendado 18+)
-- Docker & Docker Compose (opcional, recomendado para entorno local)
+- Composer (para dependencias PHP)
+- Node.js (recomendado 18+) y `npm` (para compilar el bloque)
+- Docker y Docker Compose (opcional, recomendado para entorno local reproducible)
 
-Instalación rápida (PowerShell)
-1. Coloca el plugin en la ruta del proyecto:
-   c:\Users\carde\Desktop\crm\lead-capture-crm-lite
-
-2. Instalar dependencias PHP:
-   ```powershell
-   cd 'c:\Users\carde\Desktop\crm\lead-capture-crm-lite'
+Instalación (genérica)
+1. Clona o descarga este repositorio en tu máquina:
+   ```bash
+   git clone <repo-url>
+   cd lead-capture-crm-lite
+   ```
+2. Instala las dependencias PHP con Composer:
+   ```bash
    composer install
    ```
-
-3. Instalar dependencias JS y compilar bloque:
-   ```powershell
+3. Instala las dependencias JavaScript y genera los archivos del bloque:
+   ```bash
    npm ci
    npm run build
    ```
+4. Despliega el plugin en una instalación de WordPress:
+   - Copia la carpeta del plugin a `wp-content/plugins/` y actívalo desde el panel de administración; o
+   - Usa el `docker-compose.yml` incluido para levantar un entorno WordPress y activar el plugin allí.
 
-4. Levantar entorno WordPress (opcional, usa docker-compose.yml incluido):
-   ```powershell
-   docker compose up -d
-   # Sitio WP en http://localhost:8000
-   ```
+Activación y comprobación
+- Activa el plugin desde el panel de administración de WordPress (Plugins).
+- Comprueba que el CPT `lcc_lead` está registrado en `wp-admin` en la URL `/wp-admin/edit.php?post_type=lcc_lead`.
 
-5. Activar el plugin:
-   - Desde el administrador de WordPress: Plugins > Lead Capture CRM Lite > Activar
-   - O con WP-CLI dentro del contenedor:
-     ```powershell
-     docker compose exec wordpress wp plugin activate lead-capture-crm-lite --allow-root
-     ```
-
-Uso
-- Shortcode: añadir `[lcc_lead_form]` en cualquier página/post.
-- Bloque: "Lead Capture Form" en el editor de bloques (Inspector: mostrar/ocultar campo company, estado por defecto, URL de redirección).
-- Ajustes: Settings > Lead Capture CRM Lite — configurar email, webhook y rate limit.
-- Exportar: Settings > Export Leads (botón "Export as CSV").
+Uso básico
+- Shortcode: añade `[lcc_lead_form]` en cualquier página o entrada para mostrar el formulario.
+- Bloque: inserta "Lead Capture Form" desde el editor de bloques; en el inspector puedes ajustar si mostrar el campo `company`, el estado por defecto y una URL de redirección.
+- Ajustes: ve a Settings > Lead Capture CRM Lite para configurar notificaciones por correo, webhook y límite de peticiones.
+- Exportación: desde la sección de exportación del plugin puedes descargar un CSV con todos los leads.
 
 REST API
-- Endpoint: GET /wp-json/lcc/v1/leads
-- Requiere usuario con capability `manage_options`.
-- Soporta parámetros: status, after, before, per_page, page.
+- Endpoint: `GET /wp-json/lcc/v1/leads`.
+- Requiere un usuario con la capacidad `manage_options` (administrador).
+- Parámetros soportados: `status`, `after`, `before`, `per_page`, `page`.
 
-Pruebas y análisis estático
-- PHPUnit (requiere WordPress test suite configurado y variable WP_TESTS_DIR apuntando a wordpress-tests-lib):
-  ```powershell
-  vendor\bin\phpunit -c tests\phpunit.xml
+Pruebas y análisis estático (desarrollo)
+- PHPUnit (requiere el WordPress test suite y la variable de entorno `WP_TESTS_DIR` apuntando a `wordpress-tests-lib`):
+  ```bash
+  vendor/bin/phpunit -c tests/phpunit.xml
   ```
 - PHPCS (WPCS):
-  ```powershell
-  vendor\bin\phpcs -p
+  ```bash
+  vendor/bin/phpcs -p
   ```
 - PHPStan:
-  ```powershell
-  vendor\bin\phpstan analyse -c phpstan.neon
+  ```bash
+  vendor/bin/phpstan analyse -c phpstan.neon
   ```
-- Build JS:
-  ```powershell
+- Compilar JS:
+  ```bash
   npm run build
   ```
 
-Notas de seguridad y operación
-- Todas las entradas se sanitizan y escapan donde corresponde.
-- Formularios usan nonce y honeypot; hay limitación por IP mediante transients.
-- Webhook se realiza con wp_remote_post y no bloquea la experiencia del usuario; fallos se registran cuando WP_DEBUG está activo.
+Notas de seguridad
+- Todas las entradas y salidas se sanitizan y escapan según las buenas prácticas de WordPress.
+- Formularios usan nonce y honeypot; existe limitación por IP mediante transients para mitigar spam.
+- Las llamadas a webhook son asíncronas/no bloqueantes; los errores se registran cuando `WP_DEBUG` está activo.
 
-Archivos importantes
-- Plugin bootstrap: `lead-capture-crm-lite.php`
+Estructura importante
+- Archivo de arranque del plugin: `lead-capture-crm-lite.php`
 - Código fuente PHP: `src/`
-- Bloque (fuente): `assets/block/src`
-- Bloque compilado: `assets/block/build`
-- Tests: `tests/`
-- `docker-compose.yml` (entorno de desarrollo)
+- Código del bloque (fuente): `assets/block/src`
+- Código del bloque (compilado): `assets/block/build`
+- Pruebas: `tests/`
+- `docker-compose.yml` (para levantar un entorno local reproducible)
 
 Licencia
-- MIT — uso personal y privado.
+- MIT
+
+Contribuciones y notas
+- Este repositorio contiene documentación y herramientas para desarrollo. Si usas este código, sigue las instrucciones de `CONTRIBUTING.md` para pruebas y verificación.
 
 Capturas
-- Añadir capturas en `assets/screenshots/` si se desea guardar imágenes de la interfaz.
+- Si deseas añadir capturas de pantalla, colócalas en `assets/screenshots/`.
 
 Fin.
 
