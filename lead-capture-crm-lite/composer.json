@@ -29,5 +29,10 @@
     "test": "phpunit",
     "lint": "phpcs",
     "analyze": "phpstan analyse"
+  },
+  "config": {
+    "allow-plugins": {
+      "composer/installers": true
+    }
   }
 }

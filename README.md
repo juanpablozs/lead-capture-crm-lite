@@ -68,6 +68,29 @@ Pruebas y análisis estático (desarrollo)
   npm run build
   ```
 
+Usando Docker (recomendado)
+- El repo incluye `docker-compose.yml` y scripts para levantar un entorno WordPress reproducible en Docker Desktop.
+
+1) Levantar entorno + instalar dependencias + activar plugin
+```bash
+# Arranca contenedores, instala WP, Composer deps y compila assets
+bin/setup-env.sh
+```
+
+2) Accede a WordPress
+- Abre: http://localhost:8000
+- Usuario/clave admin por defecto: `admin` / `password`
+
+3) Ejecutar tests
+```bash
+# Ejecuta composer install, descarga wordpress-tests-lib y ejecuta phpunit dentro del contenedor
+bin/run-tests.sh
+```
+
+4) Notas y recomendaciones
+- Docker Desktop con WSL2 proporciona mejor rendimiento en Windows.
+- Si tienes problemas con permisos o mounts, prueba ejecutar `docker compose down -v` y volver a subir los servicios.
+
 Notas de seguridad
 - Todas las entradas y salidas se sanitizan y escapan según las buenas prácticas de WordPress.
 - Formularios usan nonce y honeypot; existe limitación por IP mediante transients para mitigar spam.

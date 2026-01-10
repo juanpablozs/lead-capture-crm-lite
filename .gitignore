@@ -1,0 +1,52 @@
+# Node
+node_modules/
+npm-debug.log*
+yarn-error.log
+
+# Composer
+/vendor/
+/composer.phar
+/.phpunit.result.cache
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDEs
+.idea/
+.vscode/
+*.swp
+*~
+
+# Docker / WordPress runtime
+wp_data/
+db_data/
+wordpress/
+wordpress-tests-lib/
+wordpress-develop/
+/tmp/
+
+# PHPUnit / tests
+coverage/
+phpunit.xml.cache
+.phpunit.result.cache
+
+# Build / misc
+dist/
+build/
+.cache/
+*.log
+*.bak
+
+# Ignore editor/project specific
+*.iml
+.vscode/
+
+# Allow committed built block assets if present
+# (remove the next line if you prefer to ignore compiled JS/CSS)
+# assets/block/build/

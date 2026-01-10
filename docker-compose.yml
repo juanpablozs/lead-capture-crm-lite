@@ -1,0 +1,45 @@
+services:
+  db:
+    image: mysql:5.7
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: wordpress
+      MYSQL_USER: wp
+      MYSQL_PASSWORD: wp
+    volumes:
+      - db_data:/var/lib/mysql
+
+  wordpress:
+    image: wordpress:php8.1-apache
+    depends_on:
+      - db
+    ports:
+      - "${LCC_PORT:-8000}:80"
+    environment:
+      WORDPRESS_DB_HOST: db:3306
+      WORDPRESS_DB_USER: wp
+      WORDPRESS_DB_PASSWORD: wp
+      WORDPRESS_DB_NAME: wordpress
+    volumes:
+      - ./lead-capture-crm-lite:/var/www/html/wp-content/plugins/lead-capture-crm-lite:delegated
+      - wp_data:/var/www/html
+
+  php:
+    image: composer:2
+    volumes:
+      - ./:/app
+      - wp_data:/var/www/html
+    working_dir: /app/lead-capture-crm-lite
+
+  node:
+    image: node:18-bullseye
+    volumes:
+      - ./:/app
+    working_dir: /app/lead-capture-crm-lite
+    command: ["tail", "-f", "/dev/null"]
+
+
+volumes:
+  db_data:
+  wp_data:
